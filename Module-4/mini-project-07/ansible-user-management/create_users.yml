@@ -1,0 +1,13 @@
+- name: Automate User Creation
+  hosts: linux_server
+  become: yes
+  tasks:
+    - name: Create new users
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        create_home: yes
+      with_items:
+        - user1
+        - user2

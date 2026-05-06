@@ -1,0 +1,126 @@
+- name: Deploy and configure Nginx web server
+  hosts: web_servers
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+      tags: ["packages"]
+
+    - name: Install Nginx web server
+      apt:
+        name: nginx
+        state: present
+      tags: ["packages"]
+
+    - name: Ensure Nginx service is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      tags: ["service"]
+
+    - name: Create website root directory
+      file:
+        path: /var/www/mywebsite
+        state: directory
+        mode: "0755"
+        owner: www-data
+        group: www-data
+      tags: ["website"]
+
+    - name: Deploy custom HTML content
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Welcome to My Ansible-Deployed Website</title>
+              <style>
+                  body {
+                      font-family: Arial, sans-serif;
+                      margin: 40px;
+                      text-align: center;
+                      background-color: #f0f0f0;
+                  }
+                  .container {
+                      background-color: white;
+                      padding: 40px;
+                      border-radius: 10px;
+                      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                      max-width: 600px;
+                      margin: 0 auto;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🎉 Hello from Nginx!</h1>
+                  <p>This website was automatically deployed using Ansible automation.</p>
+                  <p><strong>Server IP:</strong> {{ ansible_default_ipv4.address }}</p>
+                  <p><strong>Deployment Time:</strong> {{ ansible_date_time.iso8601 }}</p>
+              </div>
+          </body>
+          </html>
+        dest: /var/www/mywebsite/index.html
+        mode: "0644"
+      tags: ["website"]
+
+    - name: Create Nginx server block configuration
+      copy:
+        content: |
+          server {
+              listen 80;
+              server_name _;
+              root /var/www/mywebsite;
+              index index.html;
+
+              # Security headers
+              add_header X-Frame-Options "SAMEORIGIN" always;
+              add_header X-Content-Type-Options "nosniff" always;
+              add_header X-XSS-Protection "1; mode=block" always;
+
+              location / {
+                  try_files $uri $uri/ =404;
+              }
+
+              # Health check endpoint
+              location /health {
+                  access_log off;
+                  return 200 "healthy\n";
+                  add_header Content-Type text/plain;
+              }
+          }
+        dest: /etc/nginx/sites-available/mywebsite
+        mode: "0644"
+      tags: ["config"]
+
+    - name: Enable the Nginx server block
+      file:
+        src: /etc/nginx/sites-available/mywebsite
+        dest: /etc/nginx/sites-enabled/mywebsite
+        state: link
+      tags: ["config"]
+      notify: reload nginx
+
+    - name: Remove default Nginx server block
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      tags: ["config"]
+      notify: reload nginx
+
+    - name: Configure firewall to allow HTTP traffic
+      ufw:
+        rule: allow
+        port: "80"
+        proto: tcp
+      tags: ["security"]
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded

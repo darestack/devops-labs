@@ -1,0 +1,21 @@
+- name: Restore files from backup
+  hosts: linux_servers
+  become: yes
+  tasks:
+    - name: Find the latest backup file
+      find:
+        paths: /backup
+        patterns: "logs-*.tar"
+      register: backup_files
+
+    - name: Fail if no backup files are found
+      fail:
+        msg: "No backup files found in /backup directory."
+      when: backup_files.files | length == 0
+
+    - name: Restore files to original location
+      unarchive:
+        src: "{{ backup_files.files[-1].path }}"
+        dest: /
+        remote_src: yes
+      when: backup_files.files | length > 0

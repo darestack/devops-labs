@@ -1,20 +1,21 @@
-# Comprehensive AWS WordPress Deployment Guide - DigitalBoost Project
+# WordPress on AWS — Highly Available Multi-AZ Deployment
 
-## Understanding the Project Architecture
+## Architecture Overview
 
-Before we begin building, it's crucial to understand what we're creating and why each component is necessary. Think of this WordPress deployment like building a secure office building with multiple floors, security systems, and backup power.
+A production-grade WordPress deployment on AWS built for availability and automatic scale.
+The architecture survives a full Availability Zone failure, scales EC2 capacity when CPU
+exceeds 70%, and keeps the database inaccessible from the public internet.
 
-**The Big Picture:** We're creating a highly available, scalable WordPress website that can handle traffic spikes while maintaining security and performance. Our architecture separates concerns - the database lives in a secure private area, web servers can scale automatically based on demand, and everything is protected by multiple layers of security.
+**Key decisions:**
 
-![Architecture Diagram](img/architecture-diagram.png)
+- **Multi-AZ VPC** (`10.0.0.0/16`) with public subnets for the ALB and private subnets for compute and database
+- **Application Load Balancer** distributes traffic across EC2 instances in two AZs
+- **Auto Scaling Group**: desired 2, min 1, max 4 — scales at 70% average CPU; 300s health check grace period
+- **RDS MySQL** in private subnets, access locked to `DigitalBoost-Web-SG` only
+- **EFS** provides shared persistent storage so all scaled instances access the same WordPress files
+- **User Data script** automates the full server setup on boot: Apache, PHP, EFS mount, `wp-config.php` with salts fetched live from the WordPress API
 
-**Key Architectural Principles:**
 
-- **High Availability**: Resources span multiple Availability Zones so if one fails, others continue working
-- **Scalability**: The system automatically adds or removes servers based on traffic
-- **Security**: Multiple layers of protection using private networks and security groups
-- **Shared Storage**: All web servers access the same WordPress files through EFS
-- **Managed Services**: Using AWS managed services (RDS, EFS, ALB) reduces operational overhead
 
 ---
 

@@ -59,11 +59,9 @@ For ease of review, the recommended method is to use Docker, as it encapsulates 
     - **Frontend:** [http://localhost:3000](http://localhost:3000)
     - **API Health Check:** [http://localhost:3001/health](http://localhost:3001/health)
 
-## 3. Evidence of Functionality (For Grading)
+## 3. Evidence of Functionality
 
-This section provides visual evidence of the application's features.
-
-_(Please replace the bracketed text with your actual screenshots.)_
+This section documents the application features with visual evidence.
 
 ### 3.1. Home Page
 

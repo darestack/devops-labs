@@ -1,10 +1,14 @@
-# Capstone Project: Modular EC2 Deployment with Apache using Terraform
+# Capstone Project: Modular Terraform Infrastructure + Prometheus/Grafana/Gatus Observability Stack
 
-## 1. Introduction
+## 1. Overview
 
-This project demonstrates how to provision an AWS EC2 instance with an Apache web server using a modular Terraform configuration. The primary goal is to showcase best practices in infrastructure as code (IaC), including reusability, modularity, and automation.
+This project implements a full infrastructure automation and monitoring stack on AWS:
 
-This guide is designed for DevOps Engineers, Cloud Architects, and IT professionals who want to learn how to create flexible and reusable infrastructure components with Terraform.
+- **Infrastructure as Code**: Modular Terraform configuration (EC2 and Security Group as reusable modules), remote S3 backend with DynamoDB state locking for team-safe operations
+- **Web Server Automation**: EC2 instance with Apache provisioned entirely via Terraform and User Data script — zero manual steps after `terraform apply`
+- **Monitoring**: Prometheus Node Exporter scraping server metrics (CPU, memory, disk, network I/O), Grafana dashboards for visualisation, and Gatus for endpoint uptime and SSL monitoring
+
+**Outcome:** Eliminated manual server health checks. Prometheus scrapes every 15s, Grafana provides at-a-glance system state, Gatus monitors endpoint availability every 60s.
 
 ![Apache Test Page](img/apache-test-page.png)
 

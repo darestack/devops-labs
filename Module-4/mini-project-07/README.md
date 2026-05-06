@@ -5,6 +5,7 @@
 **Ansible** is a powerful automation tool that simplifies IT infrastructure management. This project guides you through creating an Ansible playbook to automate user account creation on Linux servers, enabling you to manage user accounts efficiently across multiple systems.
 
 In this hands-on project, you'll learn to:
+
 - Install and configure Ansible for server management
 - Set up secure SSH key-based authentication
 - Create and execute Ansible playbooks for user automation
@@ -21,6 +22,7 @@ This project builds on your Ansible foundation and demonstrates practical user m
 ## 📋 Prerequisites
 
 ### Technical Requirements
+
 - **Control Node**: A Linux server or virtual machine (Ubuntu/Debian preferred)
 - **Target Node(s)**: At least one Linux server/VM to manage user accounts on
 - **SSH Access**: Ability to connect to target nodes via SSH
@@ -29,12 +31,14 @@ This project builds on your Ansible foundation and demonstrates practical user m
 - **Ansible Installed**: Ansible installed on the control node
 
 ### Required Knowledge
+
 - Basic Linux command line skills
 - Understanding of SSH connections and user management
 - Text editor familiarity (nano, vim, etc.)
 - Previous completion of Ansible setup project (Mini Project 6)
 
 ### Project Deliverables for Submission
+
 1. **Screenshots** of each major step and command outputs
 2. **Ansible playbook files** (inventory and user creation playbook)
 3. **Command outputs** showing successful user creation
@@ -52,28 +56,36 @@ This project builds on your Ansible foundation and demonstrates practical user m
 **Objective**: Ensure your system is ready for Ansible automation.
 
 1. **Check Linux Distribution**:
+
 ```bash
 cat /etc/os-release
 ```
-*Expected Output*: Should show Ubuntu, Debian, or similar Linux distribution.
+
+_Expected Output_: Should show Ubuntu, Debian, or similar Linux distribution.
 
 2. **Verify Sudo Access**:
+
 ```bash
 sudo whoami
 ```
-*Expected Output*: Should return `root` (confirming sudo privileges).
+
+_Expected Output_: Should return `root` (confirming sudo privileges).
 
 3. **Check Network Connectivity**:
+
 ```bash
 ping -c 3 google.com
 ```
-*Expected Output*: Successful ping responses.
+
+_Expected Output_: Successful ping responses.
 
 4. **Verify Ansible Installation**:
+
 ```bash
 ansible --version
 ```
-*Expected Output*: Ansible version information (if not installed, refer to Mini Project 6).
+
+_Expected Output_: Ansible version information (if not installed, refer to Mini Project 6).
 
 ![Prerequisites Verification](./img/prereq-verification.png)
 
@@ -90,12 +102,14 @@ ssh-keygen -t rsa
 ```
 
 **What to expect:**
+
 1. System will prompt: `Enter file in which to save the key (/home/username/.ssh/id_rsa):`
 2. **Press Enter** to accept the default location
 3. System will prompt: `Enter passphrase (empty for no passphrase):`
 4. **Press Enter** twice (for no passphrase - easier for automation)
 
-*Expected Output*:
+_Expected Output_:
+
 ```
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/username/.ssh/id_rsa):
@@ -116,16 +130,19 @@ ssh-copy-id username@target-server-ip
 ```
 
 **Command explanation:**
+
 - `ssh-copy-id`: Securely copies your public key to the target server
 - `username`: Your username on the target server
 - `target-server-ip`: IP address or hostname of target server
 
 **What happens:**
+
 1. You'll be prompted for the target server's password
 2. The public key gets added to `~/.ssh/authorized_keys` on target
 3. Future connections won't require passwords
 
-*Expected Output*:
+_Expected Output_:
+
 ```
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/username/.ssh/id_rsa.pub"
 /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
@@ -143,11 +160,12 @@ ssh username@target-server-ip
 ```
 
 **What to expect:**
+
 - Should connect without prompting for password
 - You'll see a welcome message or shell prompt
 - Type `exit` to return to control node
 
-*Expected Output*: Direct login to target server without password prompt.
+_Expected Output_: Direct login to target server without password prompt.
 
 ![SSH Key Setup](./img/ssh-key-setup.png)
 
@@ -165,6 +183,7 @@ cd ~/ansible-user-management
 ```
 
 **What this does:**
+
 - Creates a dedicated directory for your user management project
 - Changes to that directory for easier file management
 
@@ -177,8 +196,9 @@ nano inventory.ini
 ```
 
 **Add the following content:**
+
 ```ini
-[linux_servers]
+[linux_server]
 target1 ansible_host=TARGET_SERVER_IP ansible_user=YOUR_USERNAME
 
 [webservers]
@@ -189,6 +209,7 @@ target1
 ```
 
 **File explanation:**
+
 - `[linux_servers]`: Group name for all managed servers
 - `ansible_host`: IP address of the target server
 - `ansible_user`: Username for SSH connections (should match your SSH user)
@@ -211,9 +232,10 @@ nano create_users.yml
 ```
 
 **Add the following playbook content:**
+
 ```yaml
 - name: Automate user creation on Linux servers
-  hosts: linux_servers
+  hosts: linux_server
   become: yes
   tasks:
     - name: Create new users with home directories
@@ -238,6 +260,7 @@ nano create_users.yml
 ```
 
 **Playbook explanation:**
+
 - `become: yes`: Run tasks with sudo privileges
 - `user` module: Creates users with specified parameters
 - `authorized_key` module: Sets up SSH keys for users
@@ -255,6 +278,7 @@ nano create_users.yml
 **Before running the playbook, you need to:**
 
 1. **Generate SSH keys for each user** (on the control node):
+
 ```bash
 # Generate key for user1
 ssh-keygen -t rsa -f ~/.ssh/user1 -N ""
@@ -264,6 +288,7 @@ ssh-keygen -t rsa -f ~/.ssh/user2 -N ""
 ```
 
 2. **Set proper permissions**:
+
 ```bash
 chmod 600 ~/.ssh/user1
 chmod 600 ~/.ssh/user2
@@ -286,10 +311,12 @@ ansible-playbook -i inventory.ini create_users.yml
 ```
 
 **Command breakdown:**
+
 - `-i inventory.ini`: Specify inventory file location
 - `create_users.yml`: Your playbook file
 
-*Expected Output*:
+_Expected Output_:
+
 ```
 PLAY [Automate user creation on Linux servers] ****************
 
@@ -309,6 +336,7 @@ target1: ok=3 changed=2 unreachable=0 failed=0
 ```
 
 **What this means:**
+
 - `ok=3`: All tasks completed successfully
 - `changed=2`: Users were created/modified
 - `unreachable=0/failed=0`: No connection or execution failures
@@ -318,6 +346,7 @@ target1: ok=3 changed=2 unreachable=0 failed=0
 **Objective**: Confirm that users were created successfully on the target server.
 
 **SSH into the target server and verify:**
+
 ```bash
 # Check user accounts
 cat /etc/passwd | grep -E "user1|user2"
@@ -335,7 +364,8 @@ cat /home/user1/.ssh/authorized_keys
 cat /home/user2/.ssh/authorized_keys
 ```
 
-*Expected Output*:
+_Expected Output_:
+
 ```
 /etc/passwd entries showing user1 and user2
 Home directories with proper permissions
@@ -348,6 +378,7 @@ SSH public keys in authorized_keys files
 **Objective**: Verify that the created users can log in successfully.
 
 **Test SSH access for each user:**
+
 ```bash
 # Test user1 access (from control node)
 ssh user1@target-server-ip
@@ -360,6 +391,7 @@ sudo whoami
 ```
 
 **What to expect:**
+
 - Should connect without password prompts
 - Users should have access to their home directories
 - user1 should have sudo privileges (if in sudo group)
@@ -372,14 +404,14 @@ sudo whoami
 
 ### Common Issues and Solutions
 
-| Problem | Symptoms | Solution |
-|---------|----------|----------|
-| **Permission Denied** | `Permission denied (publickey)` | Check SSH key permissions (`chmod 600 ~/.ssh/*`), verify keys in `authorized_keys` |
-| **User Creation Failed** | `FAILED` in playbook output | Check sudo privileges on target, verify playbook syntax, ensure SSH connectivity |
-| **SSH Key Not Found** | `file not found` error | Verify SSH key paths in playbook, ensure keys exist and are readable |
-| **Connection Refused** | `unreachable` in playbook | Check SSH service on target (`sudo systemctl status ssh`), verify IP/username |
-| **Group Doesn't Exist** | `group 'docker' does not exist` | Create groups first or use existing groups (sudo, users, etc.) |
-| **Home Directory Issues** | Users can't access home dirs | Check filesystem permissions, ensure /home has correct permissions |
+| Problem                   | Symptoms                        | Solution                                                                           |
+| ------------------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
+| **Permission Denied**     | `Permission denied (publickey)` | Check SSH key permissions (`chmod 600 ~/.ssh/*`), verify keys in `authorized_keys` |
+| **User Creation Failed**  | `FAILED` in playbook output     | Check sudo privileges on target, verify playbook syntax, ensure SSH connectivity   |
+| **SSH Key Not Found**     | `file not found` error          | Verify SSH key paths in playbook, ensure keys exist and are readable               |
+| **Connection Refused**    | `unreachable` in playbook       | Check SSH service on target (`sudo systemctl status ssh`), verify IP/username      |
+| **Group Doesn't Exist**   | `group 'docker' does not exist` | Create groups first or use existing groups (sudo, users, etc.)                     |
+| **Home Directory Issues** | Users can't access home dirs    | Check filesystem permissions, ensure /home has correct permissions                 |
 
 ### Debugging Commands
 
@@ -406,56 +438,26 @@ ansible-playbook -i inventory.ini create_users.yml --check
 ### Common Error Messages
 
 **`FAILED! => {"changed": false, "msg": "User ... already exists"}`**
+
 - **Cause**: User account already exists on the target system
 - **Solution**: Use `state: absent` first to remove existing users, or use different usernames
 
 **`file not found`**
+
 - **Cause**: SSH key file path in playbook doesn't exist
 - **Solution**: Verify key file paths, generate keys if missing
 
 **`Permission denied`**
+
 - **Cause**: SSH keys not properly configured or insufficient permissions
 - **Solution**: Check key permissions, verify authorized_keys file
-
----
-
-## 📸 Evidence and Screenshots for Submission
-
-### Required Screenshots
-
-1. **Prerequisites Verification**
-   - `evidence-01-prereq-verification.png` - OS, sudo, and Ansible checks
-   - `evidence-02-network-connectivity.png` - Network connectivity test
-
-2. **SSH Configuration**
-   - `evidence-03-ssh-keygen.png` - SSH key generation output
-   - `evidence-04-ssh-copy-id.png` - Public key distribution
-   - `evidence-05-ssh-connection.png` - Passwordless connection test
-
-3. **Ansible Configuration**
-   - `evidence-06-inventory-file.png` - Inventory file contents
-   - `evidence-07-playbook-file.png` - User creation playbook
-   - `evidence-08-directory-structure.png` - Project directory structure
-
-4. **Execution and Results**
-   - `evidence-09-playbook-execution.png` - Ansible playbook execution
-   - `evidence-10-user-verification.png` - User account verification
-   - `evidence-11-home-directories.png` - Home directory verification
-   - `evidence-12-ssh-access-test.png` - SSH access testing
-   - `evidence-13-group-membership.png` - User group verification
-
-### Screenshot Naming Convention
-All screenshots should be saved in the `img/` directory with descriptive names:
-- `evidence-XX-description.png`
-- Include terminal prompts and outputs
-- Ensure text is readable and commands are visible
-- Capture both successful and failed attempts (for troubleshooting evidence)
 
 ---
 
 ## 🎓 Key Concepts Learned
 
 ### Ansible Playbook Structure
+
 - **Play**: Defines the automation scenario (hosts, tasks, variables)
 - **Tasks**: Individual actions to perform (modules with parameters)
 - **Modules**: Pre-built functions for specific operations
@@ -463,12 +465,14 @@ All screenshots should be saved in the `img/` directory with descriptive names:
 - **Loops**: Using `with_items` to process multiple items
 
 ### User Management Concepts
+
 - **User Accounts**: System user creation with home directories
 - **Groups**: User group membership for permissions
 - **SSH Keys**: Public key authentication for secure access
 - **Privileges**: Sudo access and permission management
 
 ### Ansible Best Practices
+
 - **Idempotency**: Playbooks can run multiple times safely
 - **Error Handling**: Proper error checking and validation
 - **Documentation**: Clear naming and comments in playbooks
@@ -479,6 +483,7 @@ All screenshots should be saved in the `img/` directory with descriptive names:
 ## 🔧 Advanced Configuration Options
 
 ### Enhanced Playbook with Password Policies
+
 ```yaml
 - name: Advanced user creation with password policies
   hosts: linux_servers
@@ -499,6 +504,7 @@ All screenshots should be saved in the `img/` directory with descriptive names:
 ```
 
 ### User Deletion Playbook
+
 ```yaml
 - name: Remove users from system
   hosts: linux_servers
@@ -515,6 +521,7 @@ All screenshots should be saved in the `img/` directory with descriptive names:
 ```
 
 ### Batch User Creation from File
+
 ```yaml
 - name: Create users from CSV file
   hosts: linux_servers
