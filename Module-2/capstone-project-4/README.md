@@ -1,10 +1,14 @@
-# WordPress on AWS — Highly Available Multi-AZ Deployment
+# WordPress on AWS — Multi-AZ Lab Deployment
 
 ## Architecture Overview
 
-A production-grade WordPress deployment on AWS built for availability and automatic scale.
-The architecture survives a full Availability Zone failure, scales EC2 capacity when CPU
-exceeds 70%, and keeps the database inaccessible from the public internet.
+AWS lab architecture for a WordPress site using a Multi-AZ VPC, public/private
+subnets, an Application Load Balancer, Auto Scaling Group, private RDS database,
+EFS shared storage, and EC2 User Data automation.
+
+This README documents the implementation path and design decisions. Treat it as
+a lab deployment unless current live endpoints, cost notes, and operational
+runbooks are added.
 
 **Key decisions:**
 
@@ -850,7 +854,7 @@ When your Auto Scaling Group launches, you're witnessing the orchestration of mu
 **Minutes 3-6**: EFS mounting and WordPress configuration happens
 **Minutes 4-7**: Database connections are established and WordPress initializes
 **Minutes 5-8**: Load balancer health checks begin passing
-**Minutes 6-10**: Instances become available to receive production traffic
+**Minutes 6-10**: Instances become available to receive website traffic
 
 This timeline helps you understand why certain configuration values (like health check grace periods and scaling warm-up times) are set as they are.
 
@@ -1090,4 +1094,4 @@ Your architecture implements horizontal scaling (adding more servers) rather tha
 
 ---
 
-This completes the comprehensive WordPress deployment guide. Your architecture now provides enterprise-grade availability, security, and scalability while maintaining cost-effectiveness and operational simplicity. The foundation you've built can support significant growth and can be enhanced with additional AWS services as requirements evolve.
+This completes the WordPress deployment guide. The lab demonstrates a credible AWS architecture pattern: public entry through an ALB, compute across multiple subnets, private database access, shared file storage, and bootstrapped EC2 instances. Before presenting it as a live production system, add current endpoint evidence, cost notes, backups, monitoring, and teardown records.

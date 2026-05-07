@@ -5,10 +5,10 @@
 This project implements a full infrastructure automation and monitoring stack on AWS:
 
 - **Infrastructure as Code**: Modular Terraform configuration (EC2 and Security Group as reusable modules), remote S3 backend with DynamoDB state locking for team-safe operations
-- **Web Server Automation**: EC2 instance with Apache provisioned entirely via Terraform and User Data script — zero manual steps after `terraform apply`
+- **Web Server Automation**: EC2 instance with Apache provisioned by Terraform and User Data after `terraform apply`
 - **Monitoring**: Prometheus Node Exporter scraping server metrics (CPU, memory, disk, network I/O), Grafana dashboards for visualisation, and Gatus for endpoint uptime and SSL monitoring
 
-**Outcome:** Eliminated manual server health checks. Prometheus scrapes every 15s, Grafana provides at-a-glance system state, Gatus monitors endpoint availability every 60s.
+**Outcome:** Replaced ad-hoc manual health polling with repeatable checks: Prometheus scrapes every 15s, Grafana provides at-a-glance system state, and Gatus monitors endpoint availability every 60s.
 
 ![Apache Test Page](img/apache-test-page.png)
 

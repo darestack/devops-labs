@@ -1,181 +1,63 @@
-# E-Commerce Platform - Project Submission
+# E-Commerce CI/CD Capstone
 
-- **Repository:** [https://github.com/daretechie/ecommerce-platform](https://github.com/daretechie/ecommerce-platform)
-- **Author:** daretechie
+React + Express lab application used to demonstrate Docker packaging and
+GitHub Actions quality gates.
 
-This document provides all the necessary information for reviewing and grading the E-Commerce Platform project.
+The application is the deployment subject. The DevOps evidence is the CI,
+Docker, and image-publish workflow around it.
 
-## 1. Project Overview
+## Pipeline Overview
 
-A full-stack e-commerce platform featuring a React frontend and Express.js API, fully containerized with Docker, and integrated with CI/CD pipelines. This project demonstrates modern software engineering practices, including DevOps, automated testing, and deployment-ready configurations.
-
-### Features
-
-- **Frontend (React)**: A responsive UI with product listings, product details, user login, and order placement.
-- **Backend (Express.js)**: A RESTful API serving products, handling user authentication with JWT, and managing orders.
-- **Containerization**: The entire application stack (frontend and backend) can be run easily with Docker Compose.
-- **CI/CD**: GitHub Actions are configured to build, test, and publish Docker images automatically.
-
-### Tech Stack
-
-- **Frontend**: React, React Router, Axios
-- **Backend**: Node.js, Express.js, JSON Web Token (JWT)
-- **DevOps**: Docker, Docker Compose, GitHub Actions
-
-## 2. How to Run the Project
-
-For ease of review, the recommended method is to use Docker, as it encapsulates the entire environment.
-
-### Using Docker (Recommended Method)
-
-**Prerequisites:**
-
-- Docker and Docker Compose must be installed.
-
-**Steps:**
-
-1.  **Clone the repository:**
-
-    ```bash
-    git clone https://github.com/daretechie/ecommerce-platform.git
-    cd ecommerce-platform
-    ```
-
-2.  **Set Environment Variables:**
-    This project uses a secret key for signing authentication tokens. For local execution, you can set it directly in your shell.
-
-    ```bash
-    export JWT_SECRET=your_very_secret_key
-    ```
-
-3.  **Build and Run with Docker Compose:**
-    This single command will build the Docker images for the API and the webapp, and start the containers.
-
-    ```bash
-    docker-compose up --build
-    ```
-
-4.  **Access the Application:**
-    - **Frontend:** [http://localhost:3000](http://localhost:3000)
-    - **API Health Check:** [http://localhost:3001/health](http://localhost:3001/health)
-
-## 3. Evidence of Functionality
-
-This section documents the application features with visual evidence.
-
-### 3.1. Home Page
-
-![Home Page](screenshots/home.png)
-**Description:** The home page displays a welcome message and featured products, demonstrating the basic rendering of the React frontend.
-
-### 3.2. Product Listing Page
-
-![Products Page](screenshots/products.png)
-**Description:** This page fetches and displays a list of all available products from the backend API.
-
-### 3.3. Product Detail Page
-
-![Product Detail](screenshots/product-detail.png)
-**Description:** Clicking on a product from the listing page navigates to its detailed view.
-
-### 3.4. Login Page & Authentication
-
-![Login Page](screenshots/login.png)
-**Description:** The login page allows users to authenticate. Successful login provides a JWT token that is used for accessing protected routes.
-
-### 3.5. Order Placement
-
-![Order Placement](screenshots/order-placement.png)
-**Description:** Once logged in, users can place orders. This demonstrates a protected API endpoint.
-
-## Git Workflow
-
-- **Feature Branches**: Create branches for new features (e.g., `feature/add-user-auth`)
-- **Pull Requests**: Require PR reviews before merging to `main`
-- **Main Branch Protection**: Protected branch with required status checks
-
-![Git Branching](screenshots/git-branching.png)
-**Description:** This shows the GitHub branch protection settings and PR workflow for collaborative development.
-
-### 4.1. Dockerization
-
-The `docker-compose.yml` file orchestrates the `api` and `webapp` services.
-![Docker Compose](screenshots/docker-compose.png)
-**Description:** This shows that both the frontend and backend services are running in Docker containers as expected.
-
-### 4.2. CI/CD Pipeline (GitHub Actions)
-
-The `.github/workflows/ci.yml` file defines the Continuous Integration pipeline, which runs tests on every push and pull request.
-![CI Workflow](screenshots/ci-workflow.png)
-**Description:** This demonstrates that the automated build and test process is working correctly.
-
-### 4.3. Continuous Delivery and Deployment
-
-This project implements **Continuous Delivery**. The `docker-publish.yml` workflow automatically builds and pushes Docker images for the `api` and `webapp` to GitHub Container Registry (GHCR) on every push to the `main` branch.
-
-The `deploy.yml` workflow then automatically deploys the application to an AWS EC2 instance by pulling the latest images and running them via Docker Compose.
-
-![Docker Publish Workflow](screenshots/docker-publish.png)
-![Deploy Workflow](screenshots/deploy-workflow.png)
-
-**Description:** This demonstrates that the application is automatically packaged, published, and deployed to a cloud platform, completing the full CI/CD pipeline from code to production.
-
-### 4.4. Performance Optimization (Caching)
-
-To accelerate the build and test process, the CI workflow uses caching for dependencies. In the `.github/workflows/ci.yml` file, the `api` job is configured to cache the `npm` directory.
-
-```yaml
-- uses: actions/setup-node@v4
-  with:
-    node-version: 20
-    cache: npm
+```text
+Pull request or push to main
+  |
+  v
+ci.yml
+  |-- API: npm ci -> npm test --if-present -> build check
+  |-- Webapp: npm ci -> npm test --if-present -> npm run build
+  |
+  v
+docker-publish.yml on main
+  |-- Build API Docker image -> push to GHCR
+  |-- Build Webapp Docker image -> push to GHCR
 ```
 
-![Cache Hit](screenshots/cache-hit.png)
+## What Is Implemented
 
-**Description:** This shows the workflow leveraging cached dependencies to avoid re-downloading them on every run, which significantly reduces build times.
+| Area | Evidence |
+|---|---|
+| Full-stack app | [ecommerce-platform](ecommerce-platform/) with React webapp and Express API |
+| Local runtime | [docker-compose.yml](ecommerce-platform/docker-compose.yml) starts API and webapp |
+| API container | [api/Dockerfile](ecommerce-platform/api/Dockerfile) |
+| Web container | [webapp/Dockerfile](ecommerce-platform/webapp/Dockerfile) and Nginx config |
+| CI workflow | [ci.yml](ecommerce-platform/.github/workflows/ci.yml) |
+| Image publishing | [docker-publish.yml](ecommerce-platform/.github/workflows/docker-publish.yml) using Docker Buildx and GHCR |
+| API test | [api/__tests__/server.test.js](ecommerce-platform/api/__tests__/server.test.js) |
 
-## 5. Testing
-
-Unit tests have been set up for the backend API.
-
-**To run the tests:**
+## Local Run
 
 ```bash
-cd api
-npm install
-npm test
+cd Module-3/capstone-project-5/ecommerce-platform
+JWT_SECRET=change_me docker compose up --build
 ```
 
-![Test Results](screenshots/test-results.png)
-**Description:** This shows the output of the automated tests, verifying the correctness of the API logic.
+Endpoints:
 
-## 6. Troubleshooting Guide
+| Service | URL |
+|---|---|
+| Webapp | `http://localhost:3000` |
+| API health | `http://localhost:3001/health` |
 
-If you encounter any issues, here are some common solutions:
+## Current Limits
 
-### Build and Runtime Issues
+- No screenshot folder is currently committed for this capstone.
+- The workflow publishes images to GHCR, but this folder does not currently include a separate EC2 deploy workflow.
+- The CI workflow still uses Node 20 in the nested lab app; update to Node 22/24 before using this as a primary CI/CD example.
+- Runtime secrets are represented by local examples; do not commit real `JWT_SECRET` values.
 
-- **Port Conflict:** If you get an error that port 3000 or 3001 is already in use, stop the application using it. Find the process with `sudo lsof -i :3000` and kill it with `sudo kill -9 <PID>`.
-- **`JWT_SECRET` not set:** Ensure you have exported the `JWT_SECRET` environment variable before running `docker-compose up`. Check with `echo $JWT_SECRET`.
-- **Docker Issues:** Run `docker-compose logs -f` for real-time logs. If containers fail to start, check for permission issues or missing dependencies.
+## Evidence To Add Next
 
-### Deployment Issues
-
-- **EC2 Connection Failed:** Verify your EC2 instance is running and security groups allow SSH (port 22) from your IP. Check the instance status in the AWS console.
-- **Image Pull Errors:** Ensure the Docker images are successfully pushed to GHCR. Check the Actions tab for any failures in the `docker-publish.yml` workflow.
-- **Application Not Accessible:** After deployment, check if the EC2 firewall allows ports 80 and 443. Use `sudo ufw status` and allow if necessary.
-
-### Performance and Network Issues
-
-- **Slow Builds:** The caching in CI/CD should help, but if local builds are slow, ensure you're using Node 20.x and have sufficient RAM.
-- **Network Timeouts:** For external API calls (like Unsplash images), check your internet connection. In production, consider using a CDN for static assets.
-- **Memory Issues:** Monitor with `docker stats`. If containers use too much memory, optimize your Docker images or upgrade your EC2 instance type.
-
-### CI/CD Failures
-
-- **Workflow Permissions:** Ensure the GitHub token has package read/write permissions for GHCR.
-- **Secret Mismatches:** Double-check that secrets in GitHub match your local environment variables.
-- **Node Version:** The workflows use Node 20; if you encounter issues, verify your local Node version matches.
-
-For additional help, check the GitHub Actions logs in the repository's Actions tab or open an issue.
+- Link to a passing Actions run for `ci.yml`.
+- Link to published GHCR packages.
+- Add a screenshot of `docker compose ps` and the API health endpoint.
+- Add a short deployment note if this lab is later connected to EC2.
