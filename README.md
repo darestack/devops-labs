@@ -7,9 +7,11 @@ This repository is a lab index, not a single production platform. The value is
 in the implementation notes, scripts, Terraform files, playbooks, workflow
 files, screenshots, and troubleshooting records inside each project folder.
 
+For a quick proof map, start with [docs/evidence-index.md](docs/evidence-index.md).
+
 Completed as part of the [Darey.io DevOps curriculum](https://3mtt.academy.darey.io/).
 
-## 30-Second Review
+## How To Read This Repo
 
 | Capability | Best Evidence | Current Scope |
 |---|---|---|
@@ -18,6 +20,21 @@ Completed as part of the [Darey.io DevOps curriculum](https://3mtt.academy.darey
 | Terraform / IaC | [Terraform backend and VPC/S3 modules](Module-4/mini-project-03/) plus [EC2/security-group modules](Module-4/mini-project-05/) | Actual Terraform files live in mini-project folders; capstone write-up should be consolidated later |
 | Ansible operations | [User management playbook](Module-4/mini-project-07/ansible-user-management/), [Nginx deployment playbooks](Module-4/mini-project-08/ansible-nginx-deployment/), and [backup/restore playbooks](Module-4/mini-project-09/ansible-backup-restore/) | Practical server automation examples |
 | Monitoring | [Terraform + observability capstone write-up](Module-4/capstone-project-6/) and Gatus/Prometheus/Grafana labs in Module 4 | Monitoring workflow documented; add exported dashboards and config files next |
+
+## Capstones And Companion Repos
+
+Some capstones have their own application repositories. This repo is still the
+main index because it keeps the build notes, screenshots, and troubleshooting
+records together. The companion repos are useful when you want to inspect the
+app or workflow code directly.
+
+| Capstone | Main Evidence In This Repo | Companion Repo | Positioning |
+|---|---|---|---|
+| Git collaboration capstone | [Module-1/capstone-project-1](Module-1/capstone-project-1/) | [greenwood-library-website](https://github.com/darestack/greenwood-library-website) | Foundational Git workflow evidence; not a headline portfolio repo |
+| MarketPeak EC2 deployment | [Module-2/capstone-project-3](Module-2/capstone-project-3/) | [MarketPeak_Ecommerce](https://github.com/darestack/MarketPeak_Ecommerce) | Early manual EC2/Apache deployment evidence; keep as historical context |
+| E-commerce CI/CD | [Module-3/capstone-project-5](Module-3/capstone-project-5/) | [ecommerce-platform](https://github.com/darestack/ecommerce-platform) | Companion app repo; promote only after CI is refreshed and screenshots are added |
+| EC2 release automation | [Module-3 mini-project notes](Module-3/) | [github-actions-ec2-pipeline](https://github.com/darestack/github-actions-ec2-pipeline) | Polished standalone repo; better reviewed directly |
+| Container CI/CD quality gates | [Module-3 mini-project notes](Module-3/) | [github-actions-cicd-demo](https://github.com/darestack/github-actions-cicd-demo) | Polished standalone repo; better reviewed directly |
 
 ## Highest-Signal Projects
 
@@ -64,7 +81,7 @@ Completed as part of the [Darey.io DevOps curriculum](https://3mtt.academy.darey
 
 ## Next Evidence To Add
 
-- Root-level `docs/screenshots/` index with the strongest 6-8 screenshots.
+- Fresh screenshots for currently running services where the old screenshots are historical.
 - Redacted `terraform plan` / `terraform apply` outputs for the Terraform labs.
 - GitHub Actions run links for the e-commerce CI/CD capstone.
 - Grafana dashboard export JSON and Gatus config for the observability labs.
