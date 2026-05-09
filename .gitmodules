@@ -1,3 +1,21 @@
 [submodule "Module-1/capstone-project-1/greenwood-library-website"]
 	path = Module-1/capstone-project-1/greenwood-library-website
-	url = https://github.com/daretechie/greenwood-library-website.git
+	url = https://github.com/darestack/greenwood-library-website.git
+[submodule "Module-1/mini-project-3/ai-startup-website"]
+	path = Module-1/mini-project-3/ai-startup-website
+	url = https://github.com/darestack/ai-startup-website.git
+[submodule "Module-2/capstone-project-3/MarketPeak_Ecommerce"]
+	path = Module-2/capstone-project-3/MarketPeak_Ecommerce
+	url = https://github.com/darestack/MarketPeak_Ecommerce.git
+[submodule "Module-3/capstone-project-5/ecommerce-platform"]
+	path = Module-3/capstone-project-5/ecommerce-platform
+	url = https://github.com/darestack/ecommerce-platform.git
+[submodule "Module-3/mini-project-09/github-actions-cicd-demo"]
+	path = Module-3/mini-project-09/github-actions-cicd-demo
+	url = https://github.com/darestack/github-actions-cicd-demo.git
+[submodule "Module-3/mini-project-10/github-actions-ec2-pipeline"]
+	path = Module-3/mini-project-10/github-actions-ec2-pipeline
+	url = https://github.com/darestack/github-actions-ec2-pipeline.git
+[submodule "Module-3/mini-project-11/github-actions-ec2-pipeline"]
+	path = Module-3/mini-project-11/github-actions-ec2-pipeline
+	url = https://github.com/darestack/github-actions-ec2-pipeline.git
