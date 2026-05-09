@@ -17,6 +17,8 @@ points when reviewing the work quickly.
 | Docker build job | [Module-3/mini-project-09/img/build-job-image.png](../Module-3/mini-project-09/img/build-job-image.png) | Docker build stage in the GitHub Actions lab |
 | EC2 deploy workflow | [Module-3/mini-project-07/img/actions-success.png](../Module-3/mini-project-07/img/actions-success.png) | Successful Actions run from the EC2 deployment lab |
 | Live app check | [Module-3/mini-project-07/img/live-app.png](../Module-3/mini-project-07/img/live-app.png) | Browser check for the deployed app |
+| EC2 release automation companion | [GitHub Actions run 18031293362](https://github.com/darestack/github-actions-ec2-pipeline/actions/runs/18031293362) | Successful tagged deploy workflow from the standalone EC2 pipeline repo |
+| EC2 release artifact | [Release v1.0.20](https://github.com/darestack/github-actions-ec2-pipeline/releases/tag/v1.0.20) | GitHub release created by the deployment workflow |
 | Terraform apply | [Module-4/mini-project-03/img/main-apply.png](../Module-4/mini-project-03/img/main-apply.png) | Terraform apply output for backend/module work |
 | Terraform remote state | [Module-4/mini-project-03/img/state-file-console.png](../Module-4/mini-project-03/img/state-file-console.png) | State file visible in the S3 backend |
 | VPC provisioned in AWS | [Module-4/mini-project-03/img/vpc-console.png](../Module-4/mini-project-03/img/vpc-console.png) | VPC evidence from the Terraform module lab |
@@ -28,3 +30,4 @@ points when reviewing the work quickly.
 - Capstone 5: current app screenshots and deployment logs for the companion repo.
 - Capstone 6: Grafana dashboard export, Gatus config, and sanitized Terraform plan/apply output promoted into the capstone folder.
 - AWS labs: teardown notes and rough cost notes so reviewers can see the environment was managed responsibly.
+- EC2 pipeline: fresh health-check evidence only if the temporary EC2 app is re-provisioned.
