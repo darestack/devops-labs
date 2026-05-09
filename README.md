@@ -32,7 +32,7 @@ app or workflow code directly.
 |---|---|---|---|
 | Git collaboration capstone | [Module-1/capstone-project-1](Module-1/capstone-project-1/) | [greenwood-library-website](https://github.com/darestack/greenwood-library-website) | Foundational Git workflow evidence; not a headline portfolio repo |
 | MarketPeak EC2 deployment | [Module-2/capstone-project-3](Module-2/capstone-project-3/) | [MarketPeak_Ecommerce](https://github.com/darestack/MarketPeak_Ecommerce) | Early manual EC2/Apache deployment evidence; keep as historical context |
-| E-commerce CI/CD | [Module-3/capstone-project-5](Module-3/capstone-project-5/) | [ecommerce-platform](https://github.com/darestack/ecommerce-platform) | Companion app repo; promote only after CI is refreshed and screenshots are added |
+| E-commerce CI/CD | [Module-3/capstone-project-5](Module-3/capstone-project-5/) | [ecommerce-platform](https://github.com/darestack/ecommerce-platform) | Companion app repo with passing CI; promote only after current screenshots and deployment logs are added |
 | EC2 release automation | [Module-3 mini-project notes](Module-3/) | [github-actions-ec2-pipeline](https://github.com/darestack/github-actions-ec2-pipeline) | Polished standalone repo; better reviewed directly |
 | Container CI/CD quality gates | [Module-3 mini-project notes](Module-3/) | [github-actions-cicd-demo](https://github.com/darestack/github-actions-cicd-demo) | Polished standalone repo; better reviewed directly |
 
@@ -83,6 +83,6 @@ app or workflow code directly.
 
 - Fresh screenshots for currently running services where the old screenshots are historical.
 - Redacted `terraform plan` / `terraform apply` outputs for the Terraform labs.
-- GitHub Actions run links for the e-commerce CI/CD capstone.
+- Current app screenshots and deployment logs for the e-commerce CI/CD capstone.
 - Grafana dashboard export JSON and Gatus config for the observability labs.
 - AWS cost estimate and teardown checklist for the HA WordPress capstone.
