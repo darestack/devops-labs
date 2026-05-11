@@ -10,7 +10,24 @@ This project implements a full infrastructure automation and monitoring stack on
 
 **Outcome:** Replaced ad-hoc manual health polling with repeatable checks: Prometheus scrapes every 15s, Grafana provides at-a-glance system state, and Gatus monitors endpoint availability every 60s.
 
-![Apache Test Page](img/apache-test-page.png)
+![Terraform and monitoring summary](img/image.png)
+
+## Evidence Status
+
+This AWS environment was temporary and has since been destroyed to avoid ongoing cloud costs. The repo keeps the implementation notes and historical evidence, but it should not be presented as a live deployment.
+
+Current evidence:
+
+- Capstone summary screenshot: [img/image.png](img/image.png)
+- Terraform remote-state evidence from the supporting lab:
+  - [Terraform apply output](../mini-project-03/img/main-apply.png)
+  - [S3 state file](../mini-project-03/img/state-file-console.png)
+  - [VPC created in AWS](../mini-project-03/img/vpc-console.png)
+- Gatus uptime-monitoring implementation notes: [../mini-project-12/README.md](../mini-project-12/README.md)
+
+Fresh evidence to add if the stack is rebuilt: sanitized `terraform plan` / `terraform apply` output, Grafana dashboard screenshot, Gatus dashboard screenshot, and a teardown confirmation note.
+
+See [EVIDENCE.md](EVIDENCE.md) and [AWS lab cost and teardown notes](../../docs/aws-lab-cost-and-teardown-notes.md).
 
 ## 2. Project Structure
 
@@ -66,8 +83,6 @@ terraform init
 
 You should see a message indicating that Terraform has been successfully initialized.
 
-![Terraform Init](img/terraform-init.png)
-
 ### Step 3: Review the Execution Plan
 
 Run `terraform plan` to create an execution plan. This will show you what resources Terraform will create, modify, or destroy.
@@ -78,8 +93,6 @@ terraform plan
 
 Review the plan carefully to ensure it matches your expectations.
 
-![Terraform Plan](img/terraform-plan.png)
-
 ### Step 4: Apply the Configuration
 
 Apply the Terraform configuration to create the resources in your AWS account.
@@ -89,8 +102,6 @@ terraform apply -auto-approve
 ```
 
 Terraform will now provision the EC2 instance and the security group. The output will display the public IP address of the EC2 instance.
-
-![Terraform Apply](img/terraform-apply.png)
 
 ### Step 5: Verify the Deployment
 

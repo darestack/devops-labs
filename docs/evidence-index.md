@@ -19,6 +19,7 @@ points when reviewing the work quickly.
 | Live app check | [Module-3/mini-project-07/img/live-app.png](../Module-3/mini-project-07/img/live-app.png) | Browser check for the deployed app |
 | EC2 release automation companion | [GitHub Actions run 18031293362](https://github.com/darestack/github-actions-ec2-pipeline/actions/runs/18031293362) | Successful tagged deploy workflow from the standalone EC2 pipeline repo |
 | EC2 release artifact | [Release v1.0.20](https://github.com/darestack/github-actions-ec2-pipeline/releases/tag/v1.0.20) | GitHub release created by the deployment workflow |
+| AWS teardown/cost notes | [docs/aws-lab-cost-and-teardown-notes.md](aws-lab-cost-and-teardown-notes.md) | Honest note explaining why older AWS labs have historical evidence instead of live URLs |
 | Terraform apply | [Module-4/mini-project-03/img/main-apply.png](../Module-4/mini-project-03/img/main-apply.png) | Terraform apply output for backend/module work |
 | Terraform remote state | [Module-4/mini-project-03/img/state-file-console.png](../Module-4/mini-project-03/img/state-file-console.png) | State file visible in the S3 backend |
 | VPC provisioned in AWS | [Module-4/mini-project-03/img/vpc-console.png](../Module-4/mini-project-03/img/vpc-console.png) | VPC evidence from the Terraform module lab |
@@ -28,6 +29,6 @@ points when reviewing the work quickly.
 
 - Capstone 4: current ALB URL or archived screenshot showing the WordPress site behind the load balancer.
 - Capstone 5: current app screenshots and deployment logs for the companion repo.
-- Capstone 6: Grafana dashboard export, Gatus config, and sanitized Terraform plan/apply output promoted into the capstone folder.
-- AWS labs: teardown notes and rough cost notes so reviewers can see the environment was managed responsibly.
+- Capstone 6: Grafana dashboard export, Gatus config, and sanitized Terraform plan/apply output promoted into the capstone folder if the stack is rebuilt.
+- AWS labs: live screenshots only when a lab is intentionally re-provisioned; otherwise keep historical evidence plus teardown notes.
 - EC2 pipeline: fresh health-check evidence only if the temporary EC2 app is re-provisioned.
