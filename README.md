@@ -1,6 +1,6 @@
 # devops-labs
 
-Curated DevOps training portfolio covering Linux, AWS, Docker, Kubernetes,
+Curated DevOps lab portfolio covering Linux, AWS, Docker, Kubernetes,
 GitHub Actions, Terraform, Ansible, Prometheus, Grafana, and Gatus.
 
 This repository is a lab index, not a single production platform. The value is
@@ -77,7 +77,7 @@ app or workflow code directly.
 - The Terraform/observability capstone currently needs source files and
   dashboard exports promoted into the capstone folder. Until then, inspect the
   linked Terraform mini-projects for implementation code.
-- Cost and teardown notes should be added before using AWS labs in interviews.
+- AWS labs include cost and teardown notes so historical screenshots are not presented as live infrastructure.
 
 ## Next Evidence To Add
 
